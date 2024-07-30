@@ -19,6 +19,18 @@ DEFAULT_PATH_PATTERN = Path("#album-artist", "#album", "#number - #title")
 DEFAULT_COVER_RESOLUTION = 400
 
 
+def clear_name(text: str):
+    ban_chars = ['/', '\\', '*', '?', '<', '>', '"', '|']   # Запрещенные для Windows символы в имени файла
+    if text[-1] == ".":
+        text = text[:-1]
+    for char in ban_chars:
+        text = text.replace(char, "")
+    text = text.strip()
+    while text.find("  ") != -1:
+        text = text.replace("  ", " ")
+    return text
+
+
 def prepare_track_path(
     path_pattern: Path,
     track: BasicTrackInfo,
@@ -44,6 +56,8 @@ def prepare_track_path(
         replacement = str(replacement)
         if not unsafe_path:
             replacement = FILENAME_CLEAR_RE.sub("_", replacement)
+        else:
+            replacement = clear_name(replacement)
         path_str = path_str.replace(placeholder, replacement)
     path_str += ".mp3"
     return Path(path_str)
