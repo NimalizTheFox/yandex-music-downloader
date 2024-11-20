@@ -62,7 +62,6 @@ def prepare_track_path(
         path_str = path_str.replace(placeholder, replacement)
     path_str = clear_name(path_str)
     path_str += ".mp3"
-    print('Путь сохранения - ' + path_str)
     return Path(path_str)
 
 
