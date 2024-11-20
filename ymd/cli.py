@@ -262,6 +262,7 @@ def main():
             continue
 
         # save_path.parent = core.clear_name(save_path.parent)
+        print('save_path.parent - ', save_path.parent)
         save_dir = save_path.parent
         if not save_dir.is_dir():
             save_dir.mkdir(parents=True)
