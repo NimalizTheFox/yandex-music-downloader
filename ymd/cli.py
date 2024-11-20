@@ -261,8 +261,8 @@ def main():
         if args.skip_existing and save_path.is_file():
             continue
 
+        save_path.parent = core.clear_name(save_path.parent)
         save_dir = save_path.parent
-        save_dir = core.clear_name(save_dir)
         if not save_dir.is_dir():
             save_dir.mkdir(parents=True)
 
