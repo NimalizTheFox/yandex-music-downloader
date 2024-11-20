@@ -59,9 +59,8 @@ def prepare_track_path(
         replacement = str(replacement)
         if not unsafe_path:
             replacement = FILENAME_CLEAR_RE.sub("_", replacement)
-        else:
-            replacement = clear_name(replacement)
         path_str = path_str.replace(placeholder, replacement)
+    path_str = clear_name(path_str)
     path_str += ".mp3"
     return Path(path_str)
 
