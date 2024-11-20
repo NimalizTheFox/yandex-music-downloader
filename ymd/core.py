@@ -20,14 +20,17 @@ DEFAULT_COVER_RESOLUTION = 400
 
 
 def clear_name(text: str):
-    ban_chars = ['/', '\\', '*', '?', '<', '>', '"', '|']   # Запрещенные для Windows символы в имени файла
-    if text[-1] == ".":
-        text = text[:-1]
-    for char in ban_chars:
-        text = text.replace(char, "")
-    text = text.strip()
+    ban_chars = ['/', '\\', '*', '?', '<', '>', '"', '|', ':']   # Запрещенные для Windows символы в имени файла
+    text_spl = text.split('\\')
+    for i in range(1, len(text_spl)):
+        for char in ban_chars:
+            text_spl[i] = text_spl[i].replace(char, "")
+        while text_spl[i][-1] == ".":
+            text_spl[i] = text_spl[i][:-1]
+    text = '\\'.join(text_spl)
     while text.find("  ") != -1:
         text = text.replace("  ", " ")
+    text = text.strip()
     return text
 
 
