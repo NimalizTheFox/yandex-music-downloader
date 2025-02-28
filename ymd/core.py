@@ -22,7 +22,7 @@ DEFAULT_COVER_RESOLUTION = 400
 def clear_name(text: str):
     ban_chars = ['/', '\\', '*', '?', '<', '>', '"', '|', ':']   # Запрещенные для Windows символы в имени файла
     text_spl = text.split('\\')
-    for i in range(1, len(text_spl)):
+    for i in range(len(text_spl)):
         for char in ban_chars:
             text_spl[i] = text_spl[i].replace(char, "")
         while text_spl[i][-1] == ".":
