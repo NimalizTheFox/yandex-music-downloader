@@ -60,6 +60,19 @@ MAX_FILE_NAME_LENGTH_WITHOUT_SUFFIX = 255 - max(
     len(suffix) for suffix in AUDIO_FILE_SUFFIXES
 )
 
+def clear_name(text: str):
+    ban_chars = ['/', '\\', '*', '?', '<', '>', '"', '|', ':']   # Запрещенные для Windows символы в имени файла
+    text_spl = text.split('\\')
+    for i in range(len(text_spl)):
+        for char in ban_chars:
+            text_spl[i] = text_spl[i].replace(char, "")
+        while text_spl[i][-1] == ".":
+            text_spl[i] = text_spl[i][:-1]
+    text = '\\'.join(text_spl)
+    while text.find("  ") != -1:
+        text = text.replace("  ", " ")
+    text = text.strip()
+    return text
 
 class CoreTrackQuality(IntEnum):
     LOW = 0
@@ -162,11 +175,9 @@ def prepare_base_path(
     for placeholder, replacement in repl_dict.items():
         replacement = str(replacement)
         if not unsafe_path:
-            clear_re = SAFE_PATH_CLEAR_RE
-        else:
-            clear_re = UNSAFE_PATH_CLEAR_RE
-        replacement = clear_re.sub("_", replacement)
+            replacement = SAFE_PATH_CLEAR_RE.sub("_", replacement)
         path_str = path_str.replace(placeholder, replacement)
+        path_str = clear_name(path_str)
     path = Path(path_str)
     trimmed_parts = [
         part
