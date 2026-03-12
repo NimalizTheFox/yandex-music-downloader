@@ -65,9 +65,9 @@ def clear_name(text: str):
     text_spl = text.split('\\')
     for i in range(len(text_spl)):
         for char in ban_chars:
-            text_spl[i] = text_spl[i].replace(char, "")
+            text_spl[i] = text_spl[i].replace(char, "").strip()
         while text_spl[i][-1] == ".":
-            text_spl[i] = text_spl[i][:-1]
+            text_spl[i] = text_spl[i][:-1].strip()
     text = '\\'.join(text_spl)
     while text.find("  ") != -1:
         text = text.replace("  ", " ")
